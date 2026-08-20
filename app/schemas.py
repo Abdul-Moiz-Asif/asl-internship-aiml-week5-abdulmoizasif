@@ -1,11 +1,12 @@
 from pydantic import BaseModel, Field
-from typing import list
+
 
 class CancerPredictionInput(BaseModel):
     """
     Strict validation schema for the 30 features of the Breast Cancer dataset.
     Every field is required and strictly typed as a float.
     """
+
     # Mean Features
     mean_radius: float = Field(..., description="Mean radius of the tumor")
     mean_texture: float = Field(...)
@@ -42,15 +43,19 @@ class CancerPredictionInput(BaseModel):
     worst_symmetry: float = Field(...)
     worst_fractal_dimension: float = Field(...)
 
+
 class BatchPredictionInput(BaseModel):
     """Bonus Feature: Accepts a batch (list) of multiple patient records"""
+
     records: list[CancerPredictionInput]
+
 
 class PredictionResponse(BaseModel):
     """
     Strict output schema to standardize the API's response.
     Includes prediction, confidence probability, and model version.
     """
+
     prediction: str
     confidence_score: float
     model_version: str
